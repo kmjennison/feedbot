@@ -1,6 +1,6 @@
 'use strict';
 
-const axios = require('axios');
+var messenger = require('./messenger');
 
 module.exports.webhook = (event, context, callback) => {
   if (event.method === 'GET') {
@@ -12,26 +12,12 @@ module.exports.webhook = (event, context, callback) => {
     callback('Invalid token');
   }
 
+  console.log('here');
+
   if (event.method === 'POST') {
-    event.body.entry.map((entry) => {
-      entry.messaging.map((messagingItem) => {
-        if (messagingItem.message && messagingItem.message.text) {
-          const accessToken = process.env.FB_API_KEY;
-
-          const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${accessToken}`;
-
-          const payload = {
-            recipient: {
-              id: messagingItem.sender.id
-            },
-            message: {
-              text: 'Hello World!'
-            }
-          };
-
-          axios.post(url, payload).then((response) => callback(null, response));
-        }
-      });
-    });
+    console.log('posting');
+    messenger(event.body.entry)
+      .then((response) => callback(null, response))
+      .catch((response) => callback('Wrong!', response));
   }
 };

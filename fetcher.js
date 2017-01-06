@@ -1,3 +1,4 @@
+'use strict';
 
 var FeedParser = require('feedparser');
 var request = require('request'); // for fetching the feed
@@ -59,9 +60,8 @@ function fetch(feedUrl) {
 
       // Convert the stream to an array.
       toArray(stream)
-        .then(function(feedList) {
-          resolve(new Feed(feedUrl, feedList));
-        });
+        .then((feedList) => resolve(new Feed(feedUrl, feedList)))
+        .catch((error) => reject(error));
     });
   });
 }
