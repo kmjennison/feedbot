@@ -11,14 +11,15 @@ function reply(entries) {
       if (messagingItem.message && messagingItem.message.text) {
 
         // TODO: call RSS feed based on user input
-        return fetcher('https://www.npr.org/rss/podcast.php?id=510289')
+        return fetcher('https://www.npr.org/rss/rss.php?id=103537970')
           .then((feed) => {
+            const story = feed.latestStory();
             const payload = {
               recipient: {
                 id: messagingItem.sender.id
               },
               message: {
-                text: feed.latestStory().title,
+                text: story.title + ': ' + story.link,
               }
             };
             return axios.post(payload)

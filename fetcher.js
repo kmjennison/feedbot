@@ -9,7 +9,7 @@ class Story {
     this.author = feedparserObj['author'];
     this.link = feedparserObj['link'] ? feedparserObj['link'] : feedparserObj['meta']['link'];
     this.date = feedparserObj['pubdate'];
-    this.img = feedparserObj['image'];
+    this.image = feedparserObj['image']; // object with `url` and `title` properties
   }
 }
 
@@ -31,8 +31,7 @@ function fetch(feedUrl) {
     .then((items) => {
       return new Feed(feedUrl, items)
     })
-    .catch((error) => {
-    });
+    .catch((error) => error);
 }
 
 module.exports = fetch;

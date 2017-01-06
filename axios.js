@@ -9,9 +9,7 @@ function post(payload) {
 
   return axios.post(url, payload)
     .then((response) => response)
-    .catch((error) => {
-      return error;
-    });
+    .catch((error) => error);
 }
 
 module.exports = {
