@@ -1,3 +1,4 @@
 node_modules/
 _secrets.yml
 npm-debug.log
+.serverless/
