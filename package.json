@@ -8,6 +8,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.14.0"
+    "axios": "^0.14.0",
+    "feedparser": "^2.0.0",
+    "request": "^2.79.0",
+    "stream-to-array": "^2.3.0"
   }
 }
