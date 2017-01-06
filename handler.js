@@ -6,7 +6,7 @@ module.exports.webhook = (event, context, callback) => {
   if (event.method === 'GET') {
     // Facebook app verification
     const challengeToken = process.env.CHALLENGE_TOKEN;
-    if (event.query['hub.verify_token'] === challengeToken && event.query['hub.challenge']) {
+    if (event.query['hub.verify_token'] == challengeToken && event.query['hub.challenge']) {
       callback(null, parseInt(event.query['hub.challenge']));
     }
     callback('Invalid token');

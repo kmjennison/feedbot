@@ -8,7 +8,7 @@ provider:
   profile: feedbot
   environment:
     FB_API_KEY: ${file(./_secrets.yml):fb_api_key}
-    CHALLENGE_TOKEN: ${file(./_secrets.yml):challenge_token}
+    CHALLENGE_TOKEN: ${file(./_secrets.yml):fb_challenge_token}
 
 functions:
   webhook:
