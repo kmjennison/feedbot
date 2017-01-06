@@ -5,6 +5,9 @@ provider:
   runtime: nodejs4.3
   region: us-east-1
   stage: dev
+  profile: feedbot
+  environment:
+    FB_API_KEY: ${file(./_secrets.yml):fb_api_key}
 
 functions:
   webhook:

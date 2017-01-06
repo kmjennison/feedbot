@@ -1,7 +1,7 @@
 {
-  "name": "serverless-facebook-messenger-bot",
+  "name": "FeedBot",
   "version": "0.1.0",
-  "description": "Serverless Facebook Messenger Bot service",
+  "description": "Newsfeeds in Your Bot",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

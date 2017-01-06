@@ -5,7 +5,7 @@ const axios = require('axios');
 module.exports.webhook = (event, context, callback) => {
   if (event.method === 'GET') {
     // Facebook app verification
-    if (event.query['hub.verify_token'] === '<strong-token>' && event.query['hub.challenge']) {
+    ifl (event.query['hub.verify_token'] === '<strong-token>' && event.query['hub.challenge']) {
       callback(null, parseInt(event.query['hub.challenge']));
     }
     callback('Invalid token');
@@ -15,7 +15,7 @@ module.exports.webhook = (event, context, callback) => {
     event.body.entry.map((entry) => {
       entry.messaging.map((messagingItem) => {
         if (messagingItem.message && messagingItem.message.text) {
-          const accessToken = '<access-token>'; // TODO: replace this token before deployment
+          const accessToken = process.env.FB_API_KEY;
 
           const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${accessToken}`;
 
