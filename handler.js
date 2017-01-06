@@ -12,12 +12,11 @@ module.exports.webhook = (event, context, callback) => {
     callback('Invalid token');
   }
 
-  console.log('here');
-
   if (event.method === 'POST') {
-    console.log('posting');
+    callback(null);
+
     messenger(event.body.entry)
-      .then((response) => callback(null, response))
-      .catch((response) => callback('Wrong!', response));
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   }
 };

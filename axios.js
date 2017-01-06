@@ -2,15 +2,16 @@
 
 const axios = require('axios');
 
-function post(payload) {
-  const accessToken = process.env.FB_API_KEY;
-  const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${accessToken}`;
+const accessToken = process.env.FB_API_KEY;
+const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${accessToken}`;
 
-  console.log(payload);
+function post(payload) {
 
   return axios.post(url, payload)
-    .then((response) => resolve(response))
-    .catch((error) => reject(error));
+    .then((response) => response)
+    .catch((error) => {
+      return error;
+    });
 }
 
 module.exports = {

@@ -4,20 +4,13 @@ var fetcher = require('./fetcher');
 var axios = require('./axios');
 
 function reply(entries) {
-  console.log('REPLY');
-  console.log(entries);
-  entries.map((entry) => {
-    console.log(entry);
-    console.log('hallo A');
-    entry.messaging.map((messagingItem) => {
-      console.log('hallo B');
-      console.log(messagingItem.message);
-      
+
+  // `entries` can contain batches of messages from different users.
+  return Promise.all(entries.map((entry) => {
+    return Promise.all(entry.messaging.map((messagingItem) => {
       if (messagingItem.message && messagingItem.message.text) {
 
-        console.log('YOU WROTE THIS:');
-        console.log(messagingItem.message.text);
-        
+        // TODO: call RSS feed based on user input
         return fetcher('https://www.npr.org/rss/podcast.php?id=510289')
           .then((feed) => {
             const payload = {
@@ -28,14 +21,13 @@ function reply(entries) {
                 text: feed.latestStory().title,
               }
             };
-            return axios.post(url, payload)
+            return axios.post(payload)
           });
       } else {
-        console.log('no message sent :(');
-        return Promise.reject(new Error('No message sent.'))
+        return Promise.reject('No message sent.');
       }
-    });
-  });
+    }));
+  }));
 }
 
 module.exports = reply;
