@@ -44,6 +44,10 @@ function reply(entries) {
   // `entries` can contain batches of messages from different users.
   return Promise.all(entries.map((entry) => {
     return Promise.all(entry.messaging.map((messagingItem) => {
+
+      console.log('Sender id is:');
+      console.log(messagingItem.sender.id);
+
       if (messagingItem.message) {
         if (messagingItem.text) {
           return replyToText(messagingItem);
