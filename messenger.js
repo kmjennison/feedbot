@@ -24,6 +24,7 @@ function sayHiAndMenu(messagingItem) {
   console.log("Saying hi to " + messagingItem.sender.id);
   return axios.getUser(messagingItem.sender.id)
     .then(user => {
+      console.log("Got user profile ", user);
       const payload = {
         recipient: {
           id: messagingItem.sender.id

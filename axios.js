@@ -14,8 +14,7 @@ function post(payload) {
 
 function getUser(userId) {
   // From https://developers.facebook.com/docs/messenger-platform/user-profile
-  // fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=PAGE_ACCESS_TOKEN`
-  const userUrl = `https://graph.facebook.com/v2.6/${userId}?fields=first_name&access_token=${accessToken}`;
+  const userUrl = `https://graph.facebook.com/v2.6/${userId}?access_token=${accessToken}`;
   return axios.get(userUrl)
     .then((response) => response)
     .catch((error) => error);
