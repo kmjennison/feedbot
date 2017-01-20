@@ -3,14 +3,14 @@
 var AWS = require('aws-sdk');
 var db = new AWS.DynamoDB.DocumentClient();
 
-var exports = {};
+var database = {};
 
-exports.updateItem = function(params, callback) {
+database.updateItem = function(params, callback) {
   dynamoDb.putItem(params, callback);
 };
 
-exports.getItem = function(params, callback) {
+database.getItem = function(params, callback) {
   dynamoDb.getItem(params, callback);
 };
 
-module.exports = exports;
+module.exports = database;

@@ -72,7 +72,7 @@ function reply(entries) {
       user.get(messagingItem.sender.id, (user) => {
         console.log('Great! We have a user:');
         console.log(user);
-      })
+      });
 
       if (messagingItem.message) {
         if (messagingItem.message.text) {

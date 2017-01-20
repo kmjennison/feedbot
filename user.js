@@ -18,13 +18,13 @@ function create(userId, callback) {
     Item: user,
   };
 
-  db.putItem(params, function(err, data) {
+  db.putItem(params, (err, data) => {
     if (err) {
       console.log(err, err.stack);
     } else {
       console.log('Successful user creation!', data);
     }
-  }
+  });
 
   callback(user);
 };
