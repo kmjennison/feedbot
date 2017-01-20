@@ -3,9 +3,30 @@
 var fetcher = require('./fetcher');
 var axios = require('./axios');
 
+const LISTINGS = {
+  npr: 'https://www.npr.org/rss/rss.php?id=103537970',
+}
+
 function replyToText(messagingItem) {
-  // TODO: call RSS feed based on user input
-  return fetcher('https://www.npr.org/rss/rss.php?id=103537970')
+  if (!LISTINGS[messagingItem.text]) {
+    const payload = {
+      recipient: {
+        id: messagingItem.sender.id
+      },
+      message: {
+        text: `Sorry ${messagingItem.text} is not a supported feed. What about one of these?`,
+        "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"NPR",
+              "payload":"npr"
+            },
+          ],
+      },
+    };
+    return axios.post(payload);
+  }
+  return fetcher()
     .then((feed) => {
       const story = feed.latestStory();
       const payload = {
