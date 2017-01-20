@@ -44,14 +44,14 @@ function replyToText(messagingItem) {
 function sayHiAndMenu(messagingItem) {
   console.log("Saying hi to " + messagingItem.sender.id);
   return axios.getUser(messagingItem.sender.id)
-    .then(user => {
-      console.log("Got user profile ", user);
+    .then(response => {
+      console.log("Got user profile ", response.data);
       const payload = {
         recipient: {
           id: messagingItem.sender.id
         },
         message: {
-          text: `Hello ${user.first_name}!`,
+          text: `Hello ${response.data.first_name}!`,
         }
       };
       return axios.post(payload);
@@ -70,7 +70,7 @@ function reply(entries) {
       console.log(messagingItem.sender.id);
 
       if (messagingItem.message) {
-        if (messagingItem.text) {
+        if (messagingItem.message.text) {
           return replyToText(messagingItem);
         } else {
           return sayHiAndMenu(messagingItem);
