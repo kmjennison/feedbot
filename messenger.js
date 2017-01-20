@@ -6,7 +6,7 @@ var user = require('./user');
 
 const LISTINGS = {
   npr: 'https://www.npr.org/rss/rss.php?id=103537970',
-  hn: 'https://news.ycombinator.com/rss',
+  'hacker news': 'https://news.ycombinator.com/rss',
 }
 
 const TOP_LEVEL_FEED_MENU = [
@@ -18,7 +18,7 @@ const TOP_LEVEL_FEED_MENU = [
     {
       "content_type":"text",
       "title":"Hacker News",
-      "payload":"hn"
+      "payload":"hacker news"
     },
 ];
 
@@ -99,9 +99,9 @@ function reply(entries) {
 
       if (messagingItem.message) {
         if (messagingItem.message.text) {
-          if (messagingItem.message.text == "more") {
+          if (messagingItem.message.text == "More?") {
             return replyToText(messagingItem, true);
-          } else if (messagingItem.message.text == "se") {
+          } else if (messagingItem.message.text == "Something else?") {
             const payload = {
               recipient: {
                 id: messagingItem.sender.id
