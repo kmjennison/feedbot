@@ -2,6 +2,7 @@
 
 var fetcher = require('./fetcher');
 var axios = require('./axios');
+var user = require('./user');
 
 const LISTINGS = {
   npr: 'https://www.npr.org/rss/rss.php?id=103537970',
@@ -67,8 +68,11 @@ function reply(entries) {
   return Promise.all(entries.map((entry) => {
     return Promise.all(entry.messaging.map((messagingItem) => {
 
-      console.log('Sender id is:');
-      console.log(messagingItem.sender.id);
+      console.log('Looking up the user...');
+      user.get(messagingItem.sender.id, (user) => {
+        console.log('Great! We have a user:');
+        console.log(user);
+      })
 
       if (messagingItem.message) {
         if (messagingItem.message.text) {
