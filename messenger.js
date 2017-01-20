@@ -8,13 +8,14 @@ const LISTINGS = {
 }
 
 function replyToText(messagingItem) {
-  if (!LISTINGS[messagingItem.text]) {
+  const feed_location = LISTINGS[messagingItem.message.text.toLowerCase()];
+  if (!feed_location) {
     const payload = {
       recipient: {
         id: messagingItem.sender.id
       },
       message: {
-        text: `Sorry ${messagingItem.text} is not a supported feed. What about one of these?`,
+        text: `Sorry ${messagingItem.message.text} is not a supported feed. What about one of these?`,
         "quick_replies":[
             {
               "content_type":"text",
@@ -26,7 +27,7 @@ function replyToText(messagingItem) {
     };
     return axios.post(payload);
   }
-  return fetcher()
+  return fetcher(feed_location)
     .then((feed) => {
       const story = feed.latestStory();
       const payload = {
