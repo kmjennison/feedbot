@@ -38,9 +38,7 @@ function get(userId, callback) {
     ],
     TableName : 'usersTable',
     Key: { 
-      'id' : {
-        'S' : userId,
-      },
+      'id': userId,
     }
   };
 
