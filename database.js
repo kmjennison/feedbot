@@ -1,7 +1,7 @@
 'use strict';
 
 var AWS = require('aws-sdk');
-var db = new AWS.DynamoDB.DocumentClient();
+var dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 var database = {};
 
