@@ -19,8 +19,6 @@ function create(userId, callback) {
   db.put(params, (err, data) => {
     if (err) {
       console.log(err, err.stack);
-    } else {
-      console.log('Successful user creation!', data);
     }
   });
 
@@ -29,7 +27,7 @@ function create(userId, callback) {
 
 // Gets or creates a user.
 function get(userId, callback) {
-
+  
   console.log('Getting user with user ID ' + userId);
 
   var params = {
@@ -38,9 +36,7 @@ function get(userId, callback) {
     ],
     TableName : 'usersTable',
     Key: { 
-      'id' : {
-        'S' : userId,
-      },
+      'id': userId,
     }
   };
 
@@ -50,11 +46,11 @@ function get(userId, callback) {
     } else {
 
       // Item does not exist, so let's create a new user.
-      if (!data) {
+      if (!data['Item']) {
         create(userId, callback);
       } else {
-        console.log('Found the user:', data);
-        callback(data);
+        console.log('Found the user:', data['Item']);
+        callback(data['Item']);
       }      
     }
   });
