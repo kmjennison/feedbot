@@ -6,6 +6,15 @@ provider:
   region: us-east-1
   stage: dev
   profile: feedbot
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:Scan
+        - dynamodb:GetItem
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
   environment:
     FB_API_KEY: ${file(./_secrets.yml):fb_api_key}
     CHALLENGE_TOKEN: ${file(./_secrets.yml):fb_challenge_token}
@@ -22,3 +31,19 @@ functions:
           method: POST
           path: webhook
           integration: lambda
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: usersTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
