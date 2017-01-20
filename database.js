@@ -5,12 +5,12 @@ var dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 var database = {};
 
-database.updateItem = function(params, callback) {
-  dynamoDb.putItem(params, callback);
+database.put = function(params, callback) {
+  dynamoDb.put(params, callback);
 };
 
-database.getItem = function(params, callback) {
-  dynamoDb.getItem(params, callback);
+database.get = function(params, callback) {
+  dynamoDb.get(params, callback);
 };
 
 module.exports = database;

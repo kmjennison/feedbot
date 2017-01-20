@@ -2,23 +2,21 @@
 
 var db = require('./database');
 
-class User {
-  constructor(userId) {
-    this.id = userId;
-  }
-}
 
 function create(userId, callback) {
 
   console.log('Creating a new user with ID ' + userId);
 
-  var user = new User(userId);
+  var user = {
+    'id': userId
+  };
+
   var params = {
     TableName: 'usersTable',
     Item: user,
   };
 
-  db.putItem(params, (err, data) => {
+  db.put(params, (err, data) => {
     if (err) {
       console.log(err, err.stack);
     } else {
@@ -46,7 +44,7 @@ function get(userId, callback) {
     }
   };
 
-  db.getItem(params, (err, data) => {
+  db.get(params, (err, data) => {
     if (err) {
       console.log(err, err.stack);
     } else {
