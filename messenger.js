@@ -5,24 +5,45 @@ var axios = require('./axios');
 
 const LISTINGS = {
   npr: 'https://www.npr.org/rss/rss.php?id=103537970',
+  hn: 'https://news.ycombinator.com/rss',
 }
 
-function replyToText(messagingItem) {
+const TOP_LEVEL_FEED_MENU = [
+    {
+      "content_type":"text",
+      "title":"NPR",
+      "payload":"npr"
+    },
+    {
+      "content_type":"text",
+      "title":"Hacker News",
+      "payload":"hn"
+    },
+];
+
+const IN_FEED_MENU = [
+  {
+    "content_type":"text",
+    "title":"More?",
+    "payload":"more"
+  },
+  {
+    "content_type":"text",
+    "title":"Something else?",
+    "payload":"se"
+  },
+];
+
+function replyToText(messagingItem, continuing) {
   const feed_location = LISTINGS[messagingItem.message.text.toLowerCase()];
-  if (!feed_location) {
+  if (!feed_location && !continuing) {
     const payload = {
       recipient: {
         id: messagingItem.sender.id
       },
       message: {
-        text: `Sorry ${messagingItem.message.text} is not a supported feed. What about one of these?`,
-        "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"NPR",
-              "payload":"npr"
-            },
-          ],
+        text: `Sorry "${messagingItem.message.text}" is not a supported feed. What about one of these?`,
+        "quick_replies": TOP_LEVEL_FEED_MENU,
       },
     };
     return axios.post(payload);
@@ -36,6 +57,7 @@ function replyToText(messagingItem) {
         },
         message: {
           text: story.title + ': ' + story.link,
+          "quick_replies": IN_FEED_MENU,
         }
       };
       return axios.post(payload);
@@ -52,8 +74,9 @@ function sayHiAndMenu(messagingItem) {
           id: messagingItem.sender.id
         },
         message: {
-          text: `Hello ${response.data.first_name}!`,
-        }
+          text: `Hello ${response.data.first_name}! Want to read something?`,
+          "quick_replies": TOP_LEVEL_FEED_MENU,
+        },
       };
       return axios.post(payload);
     })
@@ -72,7 +95,22 @@ function reply(entries) {
 
       if (messagingItem.message) {
         if (messagingItem.message.text) {
-          return replyToText(messagingItem);
+          if (messagingItem.message.text == "more") {
+            return replyToText(messagingItem, true);
+          } else if (messagingItem.message.text == "se") {
+            const payload = {
+              recipient: {
+                id: messagingItem.sender.id
+              },
+              message: {
+                text: `What would you like to read?`,
+                "quick_replies": TOP_LEVEL_FEED_MENU,
+              },
+            };
+            return axios.post(payload);
+          } else {
+            return replyToText(messagingItem);
+          }
         } else {
           return sayHiAndMenu(messagingItem);
         }
