@@ -49,6 +49,19 @@ function replyToText(messagingItem, continuing) {
     };
     return axios.post(payload);
   }
+  if (continuing) {
+    // TODO
+    const payload = {
+      recipient: {
+        id: messagingItem.sender.id
+      },
+      message: {
+        text: 'Pretend this is another story...',
+        "quick_replies": IN_FEED_MENU,
+      }
+    };
+    return axios.post(payload);
+  }
   return fetcher(feed_location)
     .then((feed) => {
       const story = feed.latestStory();
