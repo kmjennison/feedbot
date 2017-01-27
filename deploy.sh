@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 set -e
 BRANCH=${TRAVIS_BRANCH:-$(git rev-parse --abbrev-ref HEAD)} 
 COMMIT_MSG=${TRAVIS_COMMIT_MESSAGE}
