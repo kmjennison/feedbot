@@ -37,7 +37,7 @@ resources:
     usersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: usersTable-${env:STAGE}
+        TableName: usersTable-${opt:stage}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
