@@ -4,7 +4,7 @@ provider:
   name: aws
   runtime: nodejs4.3
   region: us-east-1
-  stage: dev
+  stage: nodeploy
   profile: feedbot
   iamRoleStatements:
     - Effect: Allow
@@ -37,7 +37,7 @@ resources:
     usersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: usersTable
+        TableName: usersTable-${env:STAGE}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
